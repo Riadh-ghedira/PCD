@@ -1,0 +1,38 @@
+/* ── Global Reset & Design Tokens ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-base:       #0a0b0f;
+  --bg-surface:    #111318;
+  --bg-card:       #181b23;
+  --bg-hover:      #1e2230;
+  --border:        rgba(255,255,255,0.07);
+  --accent:        #6c63ff;
+  --accent-glow:   rgba(108,99,255,0.35);
+  --accent-2:      #00d8b0;
+  --danger:        #ef4444;
+  --warn:          #f59e0b;
+  --success:       #22c55e;
+  --text-primary:  #f0f2f8;
+  --text-muted:    #8b90a0;
+  --radius:        14px;
+  --transition:    0.2s ease;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }

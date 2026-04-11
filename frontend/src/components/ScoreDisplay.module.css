@@ -1,0 +1,68 @@
+/* ── ScoreDisplay.module.css ───────────────────────────────────────────────── */
+.card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* Header */
+.scoreHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.verdictEmoji { font-size: 2.6rem; }
+.verdictLabel { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+.jobId        { font-size: 0.72rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+
+/* Gauge */
+.gaugeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+.gaugeTrack {
+  flex: 1;
+  height: 10px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.gaugeFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.gaugeLabel { font-size: 1.1rem; font-weight: 700; min-width: 46px; text-align: right; }
+.gaugeCaption { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 26px; }
+.high { color: var(--danger); }
+.low  { color: var(--success); }
+
+/* Branch breakdown */
+.branches { border-top: 1px solid var(--border); padding-top: 22px; }
+.branchesTitle { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 16px; }
+.branchRow {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.branchName  { font-size: 0.82rem; color: var(--text-muted); white-space: nowrap; }
+.branchTrack {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.branchFill  { height: 100%; border-radius: 99px; transition: width 0.5s ease; }
+.branchScore { font-size: 0.82rem; font-weight: 600; min-width: 36px; text-align: right; }
+
+/* Footer */
+.footer { font-size: 0.75rem; color: var(--text-muted); text-align: right; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 14px; }

@@ -1,0 +1,25 @@
+# ── Core Framework ──────────────────────────────────────────────────────────
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9        # required for UploadFile support
+
+# ── Settings ─────────────────────────────────────────────────────────────────
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+
+# ── Deep Learning ─────────────────────────────────────────────────────────────
+torch>=2.2.0
+torchvision>=0.17.0
+torchaudio>=2.2.0
+
+# ── Video / Audio Processing ─────────────────────────────────────────────────
+opencv-python>=4.9.0
+librosa>=0.10.1
+ffmpeg-python>=0.2.0
+facenet-pytorch==2.5.3
+moviepy==1.0.3
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+numpy>=1.26.0
+Pillow>=10.2.0
+python-dotenv>=1.0.1

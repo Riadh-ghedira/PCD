@@ -1,68 +1,319 @@
 /* ── ScoreDisplay.module.css ───────────────────────────────────────────────── */
+
+/* ─── Card Shell ─────────────────────────────────────────────────────────── */
 .card {
   width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 30px;
-  animation: fadeIn 0.4s ease;
+  background: #0c0e14;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 32px 30px;
+  animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  position: relative;
+  overflow: hidden;
 }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
-/* Header */
-.scoreHeader {
+/* Subtle scanline texture on the card */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255,255,255,0.012) 3px,
+    rgba(255,255,255,0.012) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Verdict Header ─────────────────────────────────────────────────────── */
+.verdictHeader {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 18px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
 }
-.verdictEmoji { font-size: 2.6rem; }
-.verdictLabel { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
-.jobId        { font-size: 0.72rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
-/* Gauge */
-.gaugeWrapper {
+.verdictBadge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid;
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  flex-shrink: 0;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  box-shadow: 0 0 20px var(--verdict-glow, transparent);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.verdictSymbol { font-style: normal; line-height: 1; }
+
+.verdictLabel {
+  font-size: 1.9rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 20px var(--verdict-glow, transparent);
+  animation: fadeSlideUp 0.4s ease 0.15s both;
+}
+
+.jobId {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: #5a6275;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 4px;
+  letter-spacing: 0.08em;
+}
+
+.jobIdDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+
+/* ─── Main Gauge Section ─────────────────────────────────────────────────── */
+.gaugeSection {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+  animation: fadeSlideUp 0.5s ease 0.2s both;
+}
+
+/* Circular SVG gauge */
+.circleOuter {
+  position: relative;
+  flex-shrink: 0;
+  width: 130px;
+  height: 130px;
+}
+
+.circleSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.circleTrack {
+  fill: none;
+  stroke: rgba(255,255,255,0.05);
+  stroke-width: 8;
+}
+
+.circleFill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+}
+
+.circleInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+
+.circleValue {
+  font-size: 2.1rem;
+  font-weight: 900;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+}
+
+.circlePct {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5a6275;
+  align-self: flex-end;
   margin-bottom: 6px;
 }
-.gaugeTrack {
-  flex: 1;
-  height: 10px;
-  background: rgba(255,255,255,0.07);
+
+/* Linear gauge */
+.linearSection { flex: 1; }
+
+.linearLabel {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #5a6275;
+  margin-bottom: 10px;
+}
+
+.linearTrack {
+  height: 8px;
+  background: rgba(255,255,255,0.05);
   border-radius: 99px;
   overflow: hidden;
+  margin-bottom: 8px;
 }
-.gaugeFill {
+
+.linearFill {
   height: 100%;
   border-radius: 99px;
-  transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
 }
-.gaugeLabel { font-size: 1.1rem; font-weight: 700; min-width: 46px; text-align: right; }
-.gaugeCaption { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 26px; }
-.high { color: var(--danger); }
-.low  { color: var(--success); }
 
-/* Branch breakdown */
-.branches { border-top: 1px solid var(--border); padding-top: 22px; }
-.branchesTitle { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 16px; }
-.branchRow {
-  display: grid;
-  grid-template-columns: 1fr 2fr auto;
+.linearTicks {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.tick {
+  font-size: 0.65rem;
+  color: #3a4055;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.processingTime {
+  font-size: 0.72rem;
+  color: #5a6275;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─── Branch Section ─────────────────────────────────────────────────────── */
+.branchSection {
+  position: relative;
+  z-index: 1;
+}
+
+.branchSectionHeader {
+  display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
-.branchName  { font-size: 0.82rem; color: var(--text-muted); white-space: nowrap; }
-.branchTrack {
-  height: 6px;
+
+.branchSectionLine {
+  flex: 1;
+  height: 1px;
   background: rgba(255,255,255,0.06);
+}
+
+.branchSectionTitle {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #5a6275;
+  white-space: nowrap;
+}
+
+/* ─── Branch Grid & Cards ─────────────────────────────────────────────────── */
+.branchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.branchCard {
+  background: #10131c;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 14px;
+  padding: 18px 16px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Staggered reveal — triggered by JS adding .branchVisible */
+.branchVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.branchCard:hover {
+  border-color: var(--bar-color, rgba(255,255,255,0.12));
+  box-shadow: 0 0 20px var(--bar-glow, transparent);
+}
+
+/* Card top row */
+.branchTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.branchIcon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.branchLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #c8cdd8;
+  line-height: 1.2;
+}
+
+.branchSub {
+  font-size: 0.65rem;
+  color: #5a6275;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 2px;
+}
+
+.branchPct {
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Bar */
+.barTrack {
+  height: 5px;
+  background: rgba(255,255,255,0.05);
   border-radius: 99px;
   overflow: hidden;
 }
-.branchFill  { height: 100%; border-radius: 99px; transition: width 0.5s ease; }
-.branchScore { font-size: 0.82rem; font-weight: 600; min-width: 36px; text-align: right; }
 
-/* Footer */
-.footer { font-size: 0.75rem; color: var(--text-muted); text-align: right; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 14px; }
+.barFill {
+  height: 100%;
+  border-radius: 99px;
+  width: 0%;
+  transition: width 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .gaugeSection { flex-direction: column; align-items: flex-start; }
+  .circleOuter  { width: 100px; height: 100px; }
+  .branchGrid   { grid-template-columns: 1fr; }
+}

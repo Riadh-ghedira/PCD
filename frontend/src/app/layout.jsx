@@ -1,15 +1,20 @@
 import "./globals.css";
+import { ThemeProvider } from "../context/ThemeContext";
 
 export const metadata = {
-  title: "DeepFake Detector — Multi-Branch Ensemble",
+  title: "Deepfake Detection Platform — PCD 2025-2026",
   description:
-    "Upload a video and get a deepfake probability score powered by Temporal-Spatial Flow, Audio-Visual Sync, Frequency Analysis, and Biological rPPG.",
+    "Multi-Branch Ensemble Neural Network for deepfake detection. Four independent analysis modules: Temporal-Spatial Flow, Audio-Visual Sync, Spatial-Frequency Artifacts, and Biological rPPG.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

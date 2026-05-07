@@ -39,3 +39,12 @@ yarn-error.log*
 
 
 project_context.md
+
+# Simulation, Demo, and Report Files
+
+*.latex
+pdf_text.txt
+screenshots/
+frontend/src/services/mockApi.js
+logs/
+Deepfake Detection Platform Report _260422_175441.pdf
